@@ -59,13 +59,13 @@ def main():
     score = 0
     scoreText= Font.render("score", True, WHITE)
     scoreTextRect = scoreText.get_rect()
-    scoreTextRect.center = (20, HEIGHT-10)
+    scoreTextRect.center = (50, HEIGHT-10)
 
     livesText = Font.render("Lives", True, RED) 
     livesTextRect = livesText.get_rect() 
     livesTextRect.center = (WIDTH-120, HEIGHT-10) 
 
-    striker = Striker(0, HEIGHT-50, 100, 20, 10, WHITE)
+    striker = Striker(50, HEIGHT-50, 100, 20, 50, WHITE)
     strikerXFac = 0
 
     ball = Ball(0, HEIGHT-100, 8, 5, WHITE)
@@ -98,15 +98,18 @@ def main():
 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
-                running = False
+                isRunning = False
             if event.type == pygame.KEYDOWN: 
                 if event.key == pygame.K_LEFT: 
                     strikerXFac = -1
+                    striker.update(strikerXFac) 
                 if event.key == pygame.K_RIGHT: 
                     strikerXFac = 1
+                    striker.update(strikerXFac) 
             if event.type == pygame.KEYUP: 
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
                     strikerXFac = 0
+                    
                     
         if(collisionCheck(striker.getRect(), ball.getRect())): 
             ball.hit() 
@@ -119,7 +122,7 @@ def main():
                     blockList.pop(blockList.index(block)) 
                     score += 10
                     
-        striker.update(strikerXFac) 
+       
         lifeLost = ball.update() 
   
         if lifeLost: 
