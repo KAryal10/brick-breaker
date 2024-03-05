@@ -1,5 +1,9 @@
 import pygame
 
+WIDTH= 1280
+HEIGHT = 750
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 class Striker:
   def __init__ (self, xPos, yPos, width,height, speed, color):
     self.xPos,self.yPos,self.width,self.height=xPos,yPos,width,height
@@ -8,11 +12,11 @@ class Striker:
 
     #Rect variable which stores coordinates of striker
     self.strikerRect=pygame.Rect(self.xPos, self.yPos, self.width, self.height)
-    self.striker= pygame.draw.recct(screen,self.color,self.strikerRect)
+    self.striker= pygame.draw.rect(screen,self.color,self.strikerRect)
 
   #display object on screen
   def display(self):
-    self.striker= pygame.draw.recct(screen,self.color,self.strikerRect)
+    self.striker= pygame.draw.rect(screen,self.color,self.strikerRect)
 
   #updating striker Object
   def update(self, xFac):
@@ -22,7 +26,7 @@ class Striker:
     if self.xPos<=0:
       self.xPos=0
     elif self.xPos+self.width>=WIDTH:
-      self.xPos=Width-self.width
+      self.xPos=WIDTH-self.width
 
     self.strikerRect= pygame.Rect(self.xPos, self.yPos, self.width, self.height)
 
