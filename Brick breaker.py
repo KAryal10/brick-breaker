@@ -17,6 +17,8 @@ BLACK= (0, 0, 0)
 RED= (255, 0, 0)
 GREEN= (0, 255, 0)
 
+Font=pygame.font.SysFont('timesnewroman',  30)
+
 #setting up screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Break the block")
@@ -55,11 +57,11 @@ def main():
     isRunning = True
     lives = 5
     score = 0
-    scoreText= pygame.font.render("score", True, WHITE)
+    scoreText= Font.render("score", True, WHITE)
     scoreTextRect = scoreText.get_rect()
     scoreTextRect.center = (20, HEIGHT-10)
 
-    livesText = pygame.font.render("Lives", True, RED) 
+    livesText = Font.render("Lives", True, RED) 
     livesTextRect = livesText.get_rect() 
     livesTextRect.center = (WIDTH-120, HEIGHT-10) 
 
@@ -73,26 +75,26 @@ def main():
     blockList= populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
 
-    while running:
+    while isRunning:
         screen.fill(BLACK) 
         screen.blit(scoreText, scoreTextRect) 
         screen.blit(livesText, livesTextRect) 
 
-        scoreText = pygame.font.render("Score : " + str(score), True, WHITE) 
-        livesText = pygame.font.render("Lives : " + str(lives), True, RED)
+        scoreText = Font.render("Score : " + str(score), True, WHITE) 
+        livesText = Font.render("Lives : " + str(lives), True, RED)
 
-        if not listOfBlocks: 
-            listOfBlocks = populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
+        if not blockList: 
+            blockList = populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
         if lives <= 0: 
             running = gameOver() 
   
-            while listOfBlocks: 
-                listOfBlocks.pop(0) 
+            while blockList: 
+                blockList.pop(0) 
   
             lives = 5
             score = 0
-            listOfBlocks = populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
+            blockList = populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
@@ -108,13 +110,13 @@ def main():
                     
         if(collisionCheck(striker.getRect(), ball.getRect())): 
             ball.hit() 
-        for block in listOfBlocks: 
+        for block in blockList: 
             if(collisionCheck(block.getRect(), ball.getRect())): 
                 ball.hit() 
                 block.hit() 
   
                 if block.getHealth() <= 0: 
-                    listOfBlocks.pop(listOfBlocks.index(block)) 
+                    blockList.pop(blockList.index(block)) 
                     score += 10
                     
         striker.update(strikerXFac) 
@@ -128,8 +130,12 @@ def main():
         striker.display() 
         ball.display() 
 
-        for block in listOfBlocks: 
+        for block in blockList: 
             block.display() 
   
         pygame.display.update() 
         clock.tick(FPS) 
+
+if __name__ == "__main__": 
+    main() 
+    pygame.quit() 
