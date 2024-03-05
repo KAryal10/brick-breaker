@@ -1,52 +1,40 @@
+#importing necessary packages
+import pygame
+import random
 
-#cretaing a gameObject class
-class GameObject(object):
-    def __init__(self, canvas, item):
-        self.canvas=canvas
-        self.item=item
-    
-    def get_position(self):
-        return self.canvas.coords(self.item)
-    
-    def move(self,x,y):
-        self.canvas.move(self.item,x,y)
+pygame.init()
 
-    def delete(self):
-        self.canvas.delete(self.item)
+#setting up variable for the dimension of screen
+WIDTH= 1280
+HEIGHT = 750
 
-class Ball(GameObject):
-    def __init__(self, canvas, x,y):
-        self.radius =10
-        self.direction= [1,-1]
-        self.speed= 15
-        item=canvas.create_oval(x-self.radius, y-self.radius, x+self.radius, y+self.radius, fill='blue')
-        super(Ball, self).__init__(canvas, item)
+#Colors needed in the game
+WHITE= (255, 255, 255)
+BLACK= (0, 0, 0)
+RED= (255, 0, 0)
+GREEN= (0, 255, 0)
 
-    def update(self):
-        coords=self.get_position()
-        width = self.canvas.winfo.width()
-        if coords[0]<=0 or coords[2] >= width:
-            self.direction[0] *= -1
-        if coords[1] <=0:
-            self.direction[1] *=-1
-        x= self.direction[0] * self.speed
-        y= self.directopn[1] * self.speed
-        self.move(x,y)
+#setting up screen
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.dsiplay.set_caption("Break the block")
 
-    def collide(self, game_objects):
-        coords =self.get_position()
-        x=(coords[0]+coords[2]) * 0.5
-        if len(game_objects) > 1:
-            self.direction[1] *= -1
-        elif len(game_objects)==1:
-            game_object =game_objects[0]
-        coords = game_object.get_position()
-        if x>coords[2]:
-            self.direction[0] =1
-        elif x<coords[0]:
-            self.direction[0] = -1
-        else:
-            self.direction[1] *= -1
-        for game_object in game_objects:
-            if isinstance(game_objects, Brick):
-                game_object.hit()
+#for the frame rate control
+clock= pygame.time.Clock()
+FPS=30
+
+#to check collision
+def collisionCheck(block,ball):
+    if pygame.Rect.colliderect(block,ball):
+        return True
+    return False
+
+#Populate list of blocks on screen
+def populateBlock(blockWidth,blockHeight, horizontalSpace, verticalSpace):
+    blockList=[]
+    for i in range(0, WIDTH, horizontalSpace+blockWidth):
+        for j in range(0, HEIGHT//2, verticalSpace+blockHeight):
+            blockList.append(Block(i,j,blockHeight,blockWidth, random.choice([WHITE,GREEN,RED])
+    return blockList
+
+#function to implement when the game is over
+def gameOver():
