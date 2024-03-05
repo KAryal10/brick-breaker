@@ -38,3 +38,14 @@ def populateBlock(blockWidth,blockHeight, horizontalSpace, verticalSpace):
 
 #function to implement when the game is over
 def gameOver():
+    isOver= True
+    while isOver:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                return False
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_SPACE:
+                    return true
+
+
+                
