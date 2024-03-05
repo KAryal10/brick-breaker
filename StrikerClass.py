@@ -20,7 +20,7 @@ class Striker:
 
   #updating striker Object
   def update(self, xFac):
-    self.xPos =+ self.speed*xFac
+    self.xPos += self.speed*xFac
 
     #placing striker inside screen
     if self.xPos<=0:
