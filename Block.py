@@ -1,5 +1,13 @@
 import pygame
 
+WHITE= (255, 255, 255)
+BLACK= (0, 0, 0)
+RED= (255, 0, 0)
+GREEN= (0, 255, 0)
+WIDTH= 1280
+HEIGHT = 750
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 class Block:
   def __init__(self, xPos, yPos, height, width, color):
     self.xPos, self.yPos,self.width, self.height = xPos, yPos, width, height
@@ -15,7 +23,7 @@ class Block:
 
     #Rect variable of block
     self.blockRect= pygame.Rect(self.xPos, self.yPos, self.width, self.height)
-    self.block= pygame.draw.rect(screen,self.color,self.bolckRect)
+    self.block= pygame.draw.rect(screen,self.color,self.blockRect)
 
   #to display block on the screen
   def display(self):
