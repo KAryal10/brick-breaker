@@ -1,6 +1,9 @@
 #importing necessary packages
 import pygame
 import random
+from Ball import Ball
+from StrikerClass import Striker
+from Block import Block
 
 pygame.init()
 
@@ -48,4 +51,87 @@ def gameOver():
                     return true
 
 
-                
+def main():
+    isRunning = True
+    lives = 5
+    score = 0
+    scoreText= font.render("score", True, WHITE)
+    scoreTextRect = scoreText.get_rect()
+    scoreTextRect.center = (20, HEIGHT-10)
+
+    livesText = font.render("Lives", True, RED) 
+    livesTextRect = livesText.get_rect() 
+    livesTextRect.center = (WIDTH-120, HEIGHT-10) 
+
+    striker = Striker(0, HEIGHT-50, 100, 20, 10, WHITE)
+    strikerXFac = 0
+
+    ball = Ball(0, HEIGHT-100, 8, 5, WHITE)
+
+    blockWidth, blockHeight = 30, 10
+    horizontalSpace, verticalSpace = 15, 15
+    blockList= populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
+
+
+    while running:
+        screen.fill(BLACK) 
+        screen.blit(scoreText, scoreTextRect) 
+        screen.blit(livesText, livesTextRect) 
+
+        scoreText = font.render("Score : " + str(score), True, WHITE) 
+        livesText = font.render("Lives : " + str(lives), True, RED)
+
+         if not listOfBlocks: 
+            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalGap, verticalGap)
+
+        if lives <= 0: 
+            running = gameOver() 
+  
+            while listOfBlocks: 
+                listOfBlocks.pop(0) 
+  
+            lives = 5
+            score = 0
+            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalGap, verticalGap)
+
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT: 
+                running = False
+            if event.type == pygame.KEYDOWN: 
+                if event.key == pygame.K_LEFT: 
+                    strikerXFac = -1
+                if event.key == pygame.K_RIGHT: 
+                    strikerXFac = 1
+            if event.type == pygame.KEYUP: 
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
+                    strikerXFac = 0
+
+                if event.key == pygame.K_LEFT: 
+                    
+        if(collisionCheck(striker.getRect(), ball.getRect())): 
+            ball.hit() 
+        for block in listOfBlocks: 
+            if(collisionCheck(block.getRect(), ball.getRect())): 
+                ball.hit() 
+                block.hit() 
+  
+                if block.getHealth() <= 0: 
+                    listOfBlocks.pop(listOfBlocks.index(block)) 
+                    score += 10
+                    
+        striker.update(strikerXFac) 
+        lifeLost = ball.update() 
+  
+        if lifeLost: 
+            lives -= 1
+            ball.reset() 
+            print(lives) 
+
+        striker.display() 
+        ball.display() 
+
+        for block in listOfBlocks: 
+            block.display() 
+  
+        pygame.display.update() 
+        clock.tick(FPS) 
