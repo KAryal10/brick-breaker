@@ -1,5 +1,9 @@
 import pygame
 
+WIDTH= 1280
+HEIGHT = 750
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
 class Ball:
   def __init__ (self,xPos,yPos, radius, speed, color):
     self.xPos, self.yPos, self.radius = xPos, yPos, radius
