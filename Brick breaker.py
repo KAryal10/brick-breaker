@@ -19,7 +19,7 @@ GREEN= (0, 255, 0)
 
 #setting up screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.dsiplay.set_caption("Break the block")
+pygame.display.set_caption("Break the block")
 
 #for the frame rate control
 clock= pygame.time.Clock()
@@ -55,11 +55,11 @@ def main():
     isRunning = True
     lives = 5
     score = 0
-    scoreText= font.render("score", True, WHITE)
+    scoreText= pygame.font.render("score", True, WHITE)
     scoreTextRect = scoreText.get_rect()
     scoreTextRect.center = (20, HEIGHT-10)
 
-    livesText = font.render("Lives", True, RED) 
+    livesText = pygame.font.render("Lives", True, RED) 
     livesTextRect = livesText.get_rect() 
     livesTextRect.center = (WIDTH-120, HEIGHT-10) 
 
@@ -78,11 +78,11 @@ def main():
         screen.blit(scoreText, scoreTextRect) 
         screen.blit(livesText, livesTextRect) 
 
-        scoreText = font.render("Score : " + str(score), True, WHITE) 
-        livesText = font.render("Lives : " + str(lives), True, RED)
+        scoreText = pygame.font.render("Score : " + str(score), True, WHITE) 
+        livesText = pygame.font.render("Lives : " + str(lives), True, RED)
 
         if not listOfBlocks: 
-            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalSpace, verticalSpace)
+            listOfBlocks = populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
         if lives <= 0: 
             running = gameOver() 
@@ -92,7 +92,7 @@ def main():
   
             lives = 5
             score = 0
-            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalSpace, verticalSpace)
+            listOfBlocks = populateBlock(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
