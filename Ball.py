@@ -36,6 +36,6 @@ class Ball:
   def hit(self):
     self.yFac *= -1
 
-  def getRect(self)
+  def getRect(self):
     return self.ball
       
