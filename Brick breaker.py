@@ -36,7 +36,7 @@ def populateBlock(blockWidth,blockHeight, horizontalSpace, verticalSpace):
     blockList=[]
     for i in range(0, WIDTH, horizontalSpace+blockWidth):
         for j in range(0, HEIGHT//2, verticalSpace+blockHeight):
-            blockList.append(Block(i,j,blockHeight,blockWidth, random.choice([WHITE,GREEN,RED])
+            blockList.append(Block(i,j,blockHeight,blockWidth, random.choice([WHITE,GREEN,RED])))
     return blockList
 
 #function to implement when the game is over
@@ -48,7 +48,7 @@ def gameOver():
                 return False
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_SPACE:
-                    return true
+                    return True
 
 
 def main():
@@ -81,8 +81,8 @@ def main():
         scoreText = font.render("Score : " + str(score), True, WHITE) 
         livesText = font.render("Lives : " + str(lives), True, RED)
 
-         if not listOfBlocks: 
-            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalGap, verticalGap)
+        if not listOfBlocks: 
+            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
         if lives <= 0: 
             running = gameOver() 
@@ -92,7 +92,7 @@ def main():
   
             lives = 5
             score = 0
-            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalGap, verticalGap)
+            listOfBlocks = populateBlocks(blockWidth, blockHeight, horizontalSpace, verticalSpace)
 
         for event in pygame.event.get(): 
             if event.type == pygame.QUIT: 
@@ -105,8 +105,6 @@ def main():
             if event.type == pygame.KEYUP: 
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT: 
                     strikerXFac = 0
-
-                if event.key == pygame.K_LEFT: 
                     
         if(collisionCheck(striker.getRect(), ball.getRect())): 
             ball.hit() 
