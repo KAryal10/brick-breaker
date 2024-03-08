@@ -32,6 +32,10 @@ class Block:
 
   def hit(self):
     self.health -=self.damage
+    if self.health==2:
+      self.color = GREEN
+    elif self.health==1:
+      self.color=WHITE
 
   def getRect(self):
     return self.blockRect
